@@ -1,0 +1,29 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "7672cda7875aa5f41245163f13dfe887"
+name = "test-diamond-search"
+handle = "test-diamond-search"
+application_url = "https://martial-technology-autumn-lone.trycloudflare.com"
+embedded = true
+
+[build]
+automatically_update_urls_on_dev = true
+dev_store_url = "app-test-diamond.myshopify.com"
+include_config_on_deploy = true
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://martial-technology-autumn-lone.trycloudflare.com/auth/callback",
+  "https://martial-technology-autumn-lone.trycloudflare.com/auth/shopify/callback",
+  "https://martial-technology-autumn-lone.trycloudflare.com/api/auth/callback"
+]
+
+[webhooks]
+api_version = "2025-01"
+
+[pos]
+embedded = false
