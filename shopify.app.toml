@@ -3,7 +3,7 @@
 client_id = "7672cda7875aa5f41245163f13dfe887"
 name = "test-diamond-search"
 handle = "test-diamond-search"
-application_url = "https://martial-technology-autumn-lone.trycloudflare.com"
+application_url = "https://ace-allegedly-louse.ngrok-free.app"
 embedded = true
 
 [build]
@@ -17,9 +17,9 @@ scopes = "write_products"
 
 [auth]
 redirect_urls = [
-  "https://martial-technology-autumn-lone.trycloudflare.com/auth/callback",
-  "https://martial-technology-autumn-lone.trycloudflare.com/auth/shopify/callback",
-  "https://martial-technology-autumn-lone.trycloudflare.com/api/auth/callback"
+  "https://ace-allegedly-louse.ngrok-free.app/auth/callback",
+  "https://ace-allegedly-louse.ngrok-free.app/auth/shopify/callback",
+  "https://ace-allegedly-louse.ngrok-free.app/api/auth/callback"
 ]
 
 [webhooks]

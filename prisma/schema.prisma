@@ -30,3 +30,12 @@ model Session {
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
 }
+
+// [START APIKey-model]
+model APIKey {  
+  id            Int       @id @default(autoincrement())
+  keyText           String
+  createdAt     DateTime  @default(now())
+}
+
+// [END APIKey-model]
