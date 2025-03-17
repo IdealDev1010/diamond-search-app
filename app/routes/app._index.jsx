@@ -19,10 +19,10 @@ export const action = async ({ request }) => {
   let apiKeys = await request.formData(); 
   apiKeys = Object.fromEntries(apiKeys);
   const apiKeyValue = apiKeys.apiKey;
- // const apiKeyString = apiKeyValue.replace(/"/g, '');
+  //const apiKeyString = apiKeyValue.replace(/"/g, '');
   await db.aPIKey.create({ 
     data: {
-      keyText: JSON.stringify(apiKeyValue)
+      keyText: apiKeyValue
     },
   })
   return redirect('/app?success=true');   
