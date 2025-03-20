@@ -7,7 +7,7 @@ export const action = async ({ request, res }) => {
     const data = await request.json();
     const shop = session.shop;
     // const accessToken = session.accessToken;
-    const accessToken = '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';
+    const accessToken = process.env.ACCESS_TOKEN;
 
     const graphqlEndpoint = `https://${shop}/admin/api/2025-01/graphql.json`;
 
