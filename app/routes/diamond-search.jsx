@@ -26,40 +26,62 @@ export async function loader({ request }) {
 				<div id="diamondinstantinventory" style="height:1200px" data-apikey="${keyTextValue}" height="100%" width="100%"></div>
 	 				<script src="https://instantinventory-widgets-cl59s.s3.amazonaws.com/diamonds/1.0.0/widget.js"></script>
           </script>
-          
           <script>
-            setTimeout(() => {
-              const iframe = document.getElementById('diamondRapnetIframe');
-              console.log("Ifreame has been loaded==>", iframe);
-
-                console.log("Ifreame has been loaded111==>", iframe);
-                try {
-                  const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
-                  const handleButtonClick = () => {  
-                    console.log('Button clicked inside iframe!');  
-                  };
-
-                  const observer = new MutationObserver((mutations) => {  
-                    mutations.forEach(mutation => {  
-                      if (mutation.type === 'childList') {  
-                        const button = iframeDocument.getElementsByClassName('info__CartButton-sc-6wrchz-7')[0];
-                        if (button) {  
-                          button.addEventListener('click', handleButtonClick);  
-                          // Optionally disconnect the observer after setting the event listener  
-                          observer.disconnect();  
-                        } 
-                      }
-                    }); 
-                  });
-                  observer.observe(iframeDocument.body, { childList: true, subtree: true });  
-                } catch (e) {
-                  console.log("Error==>", e);
-                } finally {
-                  console.log("Completed"); 
-                }
-            }, 5000);
-          </script>
+					(function(d, w) {
+						function observeAddToCart() {
+							window.addEventListener("ds.addtocart", function(event) {
+								jQuery("#diamondinstantinventory").addClass("ds-loading");
+                const shopDomain = window.location.href;
+                const postUrl = shopDomain + "/create-product";
+								jQuery.ajax({
+								  url: postUrl,
+									type: "POST",
+                  contentType: "application/json",
+                  data: JSON.stringify(event.detail.diamond)
+								}).done(function(res) {
+                  console.log("Response Data==>", res);
+									var rurl = res.url;
+									var variant = res.id;
+                  console.log("variant==>", variant)
+									 // jQuery("#diamondinstantinventory").removeClass("ds-loading");
+									jQuery.ajax({
+										url: "/cart/add.js",
+										type: "POST",
+										data: {quantity: 1, id: variant}
+									}).done(function(res) {
+										// jQuery("#diamondinstantinventory").removeClass("ds-loading");
+										w.location = rurl;
+									}).fail(function(res) {
+										jQuery("#diamondinstantinventory").removeClass("ds-loading");
+										// w.location = rurl;
+										alert("test 1");
+									});
+									//w.location = rurl;
+								}).fail(function(res) {
+									jQuery("#diamondinstantinventory").removeClass("ds-loading");
+									alert("test 2");
+								});
+							});
+						}
+						if (d.addEventListener) {
+							d.addEventListener("ds.ready", function() {
+								observeAddToCart();
+							}, false);
+						} else if (d.attachEvent) {
+							d.documentElement.attachEvent("onpropertychange", function(event) {
+								if (event.propertyName === "ds.ready")
+									observeAddToCart();
+							});
+						}
+					}(document, window));
+					</script>
           `
  return liquid(diamondSearch);
 }
+
+// export const action = async ({ request }) => {
+//   const data = await request.json();
+//   console.log("JSON Data Received:", data);
+
+//   return { success: true, data: data };
+// }
