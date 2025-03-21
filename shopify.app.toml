@@ -13,7 +13,7 @@ include_config_on_deploy = true
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "read_inventory,read_locations,write_inventory,write_products"
+scopes = "read_inventory,read_locations,read_publications,write_inventory,write_products,write_publications"
 
 [auth]
 redirect_urls = [
@@ -24,6 +24,11 @@ redirect_urls = [
 
 [webhooks]
 api_version = "2025-01"
+
+[app_proxy]
+url = "https://ace-allegedly-louse.ngrok-free.app/diamond-search"
+subpath = "diamond-search"
+prefix = "apps"
 
 [pos]
 embedded = false

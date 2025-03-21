@@ -1,23 +1,7 @@
 import { authenticate } from "../shopify.server";
 import db from "../db.server"; 
-// import { useEffect } from "react";
 
 export async function loader({ request }) {
-
-  // useEffect(() => {
-  //   function handleMessage(event) {
-  //     if (event.data?.type === "diamondWidgetButtonClicked") {
-  //       console.log("Iframe button clicked:", event.data);
-  //       // your custom logic here
-  //     }
-  //   }
-
-  //   window.addEventListener("message", handleMessage);
-
-  //   return () => {
-  //     window.removeEventListener("message", handleMessage);
-  //   };
-  // }, []);
 
   const { liquid } = await authenticate.public.appProxy(request);
   const apiKeyValue = await db.aPIKey.findFirst({orderBy: { id: "desc" }});
@@ -39,24 +23,24 @@ export async function loader({ request }) {
                   contentType: "application/json",
                   data: JSON.stringify(event.detail.diamond)
 								}).done(function(res) {
-                  console.log("Response Data==>", res);
 									var rurl = res.url;
 									var variant = res.id;
-                  console.log("variant==>", variant)
-									 // jQuery("#diamondinstantinventory").removeClass("ds-loading");
-									jQuery.ajax({
-										url: "/cart/add.js",
-										type: "POST",
-										data: {quantity: 1, id: variant}
-									}).done(function(res) {
-										// jQuery("#diamondinstantinventory").removeClass("ds-loading");
-										w.location = rurl;
-									}).fail(function(res) {
-										jQuery("#diamondinstantinventory").removeClass("ds-loading");
-										// w.location = rurl;
-										alert("test 1");
-									});
-									//w.location = rurl;
+									jQuery("#diamondinstantinventory").removeClass("ds-loading");
+									setTimeout(() => {
+										jQuery.ajax({
+											url: "/cart/add.js",
+											type: "POST",
+											data: { 'items': [{'quantity': 1, 'id': variant}] }
+										}).done(function(res) {
+											jQuery("#diamondinstantinventory").removeClass("ds-loading");
+											w.location = rurl;
+										}).fail(function(res) {
+											jQuery("#diamondinstantinventory").removeClass("ds-loading");
+											// w.location = rurl;
+											alert("test 1");
+										});
+										//w.location = rurl;
+									}, 1000);
 								}).fail(function(res) {
 									jQuery("#diamondinstantinventory").removeClass("ds-loading");
 									alert("test 2");
